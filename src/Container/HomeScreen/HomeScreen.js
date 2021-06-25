@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
                             numColumns={numColumns}
                         />
 
-                        <View style={{ marginBottom: -100 }} />
+                        {/* <View style={{ marginBottom: -100 }} /> */}
                     </View>
                 </View>
             ) : (
