@@ -1,3 +1,5 @@
+// import all screen
+
 import HomeScreen from "./HomeScreen/HomeScreen"
 import FavoriteScreen from "./FavoriteScreen/FavoriteScreen"
 import DetailsScreen from "./DetailsScreen/DetailsScreen"

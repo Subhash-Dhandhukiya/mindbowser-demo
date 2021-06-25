@@ -29,6 +29,7 @@ const tabBarListeners = ({ navigation, route }) => ({
     tabPress: () => navigation.navigate(route.name),
 });
 
+//Home Tab
 function HomeTab() {
     return (
         <Tab.Navigator
@@ -83,6 +84,7 @@ function HomeTab() {
     )
 }
 
+//Root of Navigation
 const NavContainer = () => {
     return (
         <NavigationContainer>
