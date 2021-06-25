@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, SafeAreaView, TextInput, FlatList, TouchableOpacity, Image, Keyboard ,TouchableWithoutFeedback} from 'react-native'
+import { Text, View, StyleSheet, SafeAreaView, TextInput, FlatList, TouchableOpacity, Image, Keyboard ,ActivityIndicator} from 'react-native'
 import { color } from '../../Constant'
 import axios from 'axios'
 import { APIKEY } from '../../Constant/API'
@@ -10,21 +10,30 @@ const SearchScreen = ({ navigation }) => {
 
     const [text, setText] = useState('')
     const [data, setData] = useState([]);
+    const [loading,setLoading]=useState(false);
 
+    //Fetch Data from API
     const resultData = async () => {
+        setLoading(true);
         Keyboard.dismiss();
         try {
-            const result = await axios.get(`https://api.giphy.com/v1/gifs/search?q=${text}&api_key=${APIKEY}&limit=2`)
+            const result = await axios.get(`https://api.giphy.com/v1/gifs/search?q=${text}&api_key=${APIKEY}`)
             setData(result.data.data);
         } catch (error) {
             console.log(error);
         }
+
+        setLoading(false);
+        // setText('');
     }
 
+    //HandleChange TextInput
     const handleChange = (inputText) => {
         setText(inputText);
     }
 
+
+    //Navigation Data to Details Screen
     const Navigate_Data = (image, title, description, id) => {
 
         navigation.navigate(DETAILS, {
@@ -35,7 +44,9 @@ const SearchScreen = ({ navigation }) => {
         })
     }
 
-    const renderItem = ({ item, index }) => {
+
+    //Render Fetched Data
+    const renderItem = ({ item }) => {
 
         try {
             var discription = item.user.description;
@@ -76,7 +87,8 @@ const SearchScreen = ({ navigation }) => {
                 </View>
                 <View style={{ backgroundColor: color.DARK_GRAY, height: 0.5 }} />
 
-                <View>
+               {data.length>0 ? (
+                    <View>
 
                     <FlatList
                         data={data}
@@ -87,8 +99,14 @@ const SearchScreen = ({ navigation }) => {
 
                     <View style={{ marginBottom:-100}} />
                 </View>
+               ) : (
+                 (loading ? (
+                    <View style={{justifyContent:'center',alignItems:'center'}}>
+                    <ActivityIndicator size="large" color={color.FONT} />
+                </View>
+                 ) : (<Text></Text>))
+               )}
             </SafeAreaView>
-
     );
 }
 

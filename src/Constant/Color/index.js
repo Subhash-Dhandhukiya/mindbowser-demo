@@ -1,3 +1,5 @@
+//Color code 
+
 const BLACK='#000';
 const BLUE="#00a8ff";
 const FONT="#2f3542";

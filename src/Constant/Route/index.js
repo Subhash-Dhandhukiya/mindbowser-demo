@@ -1,3 +1,5 @@
+//Route Screen Name
+
 const SPLASH="SPLASH";
 const HOME = "Home"
 const SEARCH = "Search"

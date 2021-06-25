@@ -9,7 +9,6 @@ export default class App extends Component {
     this.animation.play();
   }
 
-
   render() {
     return (
       <View style={styles.container}>

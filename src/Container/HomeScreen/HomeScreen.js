@@ -1,5 +1,5 @@
 import React, { useState, useEffect, isValidElement } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, FlatList, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import { DETAILS } from '../../Constant/Route';
 import { APIKEY } from '../../Constant/API';
@@ -11,6 +11,7 @@ const HomeScreen = ({ navigation }) => {
 
     const [data, setData] = useState([]);
 
+    //Fetch Api
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,6 +25,7 @@ const HomeScreen = ({ navigation }) => {
         fetchData();
     }, [])
 
+
     // Navigate to Details 
     const Navigate_Data = (image, title, description, id) => {
 
@@ -36,6 +38,7 @@ const HomeScreen = ({ navigation }) => {
     }
 
 
+    //Print Fetched Data
     const renderItem = ({ item, index }) => {
 
         try {
@@ -57,23 +60,31 @@ const HomeScreen = ({ navigation }) => {
         )
     }
 
+    
     return (
         <SafeAreaView>
             <View style={styles.display}>
                 <Text style={{ fontSize: 20, color: color.BLUE }}>Gifs</Text>
             </View>
-            <View style={{ backgroundColor: color.BLACK, height: 0.5 }} />
-            <View>
+            {data.length > 0 ? (
+                <View>
+                    <View style={{ backgroundColor: color.BLACK, height: 0.5 }} />
+                    <View>
+                        <FlatList
+                            data={data}
+                            renderItem={({ item }) => renderItem({ item })}
+                            keyExtractor={(item, index) => index.toString()}
+                            numColumns={numColumns}
+                        />
 
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => renderItem({ item })}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={numColumns}
-                />
-
-                <View style={{ marginBottom: -100 }} />
-            </View>
+                        <View style={{ marginBottom: -100 }} />
+                    </View>
+                </View>
+            ) : (
+                <View style={{justifyContent:'center',alignItems:'center'}}>
+                    <ActivityIndicator size="large" color={color.FONT} />
+                </View>
+            )}
         </SafeAreaView>
     );
 }
@@ -99,3 +110,22 @@ const styles = StyleSheet.create({
     },
     image: {}
 })
+
+
+
+
+{/* <View style={styles.display}>
+                <Text style={{ fontSize: 20, color: color.BLUE }}>Gifs</Text>
+            </View>
+            <View style={{ backgroundColor: color.BLACK, height: 0.5 }} />
+            <View>
+
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => renderItem({ item })}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={numColumns}
+                />
+
+                <View style={{ marginBottom: -100 }} />
+            </View> */}
